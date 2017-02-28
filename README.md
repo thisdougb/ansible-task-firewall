@@ -55,18 +55,18 @@ TASK [setup] *******************************************************************
 ok: [34.248.225.230]
 
 TASK [openldap : install openldap package] *************************************
-checking rule: [yum:name httpd] against openldap
-checking rule: [yum:name tcpdump] against openldap-clients
+checking firewall rule: [yum:name httpd]
+checking firewall rule: [yum:name tcpdump]
 ok: [34.248.225.230]
 
 TASK [openldap : install openldap-servers package] *****************************
-checking rule: [yum:name httpd] against openldap-servers
-checking rule: [yum:name tcpdump] against openldap-clients
+checking firewall rule: [yum:name httpd]
+checking firewall rule: [yum:name tcpdump]
 ok: [34.248.225.230]
 
 TASK [openldap : install openldap-clients package] *****************************
-checking rule: [yum:name httpd] against openldap-clients
-checking rule: [yum:name tcpdump] against openldap-clients
+checking firewall rule: [yum:name httpd]
+checking firewall rule: [yum:name tcpdump]
 ok: [34.248.225.230]
 
 TASK [openldap : logging] ******************************************************
@@ -82,8 +82,8 @@ TASK [openldap-config : copy base slapd config] ********************************
 ok: [34.248.225.230]
 
 TASK [openldap-config :  install tcpdump for debugging] ************************
-checking rule: [yum:name httpd] against openldap-config
-checking rule: [yum:name tcpdump] against openldap-config
+checking firewall rule: [yum:name httpd]
+checking firewall rule: [yum:name tcpdump]
 ERROR! firewall policy: module (yum) arg (name) value (tcpdump) blocked
 ```
 
