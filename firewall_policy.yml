@@ -1,0 +1,20 @@
+# file: /etc/ansible/firewall_policy.yml
+
+# prevent a user being created with uid 0
+user:
+  uid:
+    - 0
+
+# prevent 'password' or 'drop' (sql) in the args to command
+command: 
+#  _raw_params: 
+#    - contains password
+#    - contains drop
+
+# disallow the shell module
+shell:
+
+# prevent the httpd package being installed by yum
+yum:
+  name: 
+    - httpd
