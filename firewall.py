@@ -83,7 +83,7 @@ class Firewall:
                 # for each rule in the policy module:arg:[value] list, compare the current task arg
                 for rule in self.policy[task.action][key]:
 
-                    display.display('checking rule: [%s:%s %s] against %s' % (task.action, key, rule, task.args[key]))
+                    display.display('checking firewall rule: [%s:%s %s]' % (task.action, key, rule))
 
                     # do we have the 'contains' verb option in policy
                     if str(rule).startswith('contains'):
