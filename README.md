@@ -36,6 +36,17 @@ yum:
 
 And this would look like this in the command line:
 ```
+$ cat build_ldap_server.yml
+---
+- hosts: tag_Name_ldap
+  strategy: firewall
+
+  roles:
+    - { role: openldap, tags: ['openldap'] }
+    - { role: openldap-config, tags: ['openldap-config'] }
+
+
+
 $ ansible-playbook build_ldap_server.yml 
 
 PLAY [tag_Name_ldap] ***********************************************************

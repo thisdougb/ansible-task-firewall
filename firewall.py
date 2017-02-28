@@ -1,3 +1,5 @@
+# file: /usr/lib/python2.7/site-packages/ansible/plugins/strategy/firewall.py
+
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
