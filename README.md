@@ -70,8 +70,10 @@ ok: [34.248.225.230]
 TASK [openldap-config : copy base slapd config] ********************************
 ok: [34.248.225.230]
 
-TASK [openldap-config : import base slapd config] ******************************
-ERROR! firewall policy: module (shell) blocked
+TASK [openldap-config :  install tcpdump for debugging] ************************
+checking rule: [yum:name httpd] against openldap-config
+checking rule: [yum:name tcpdump] against openldap-config
+ERROR! firewall policy: module (yum) arg (name) value (tcpdump) blocked
 ```
 
 # TODO
