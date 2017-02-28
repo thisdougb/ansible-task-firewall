@@ -2,11 +2,11 @@
 a firewall strategy-plugin for Ansible, to halt play executing when SecOps policy is violated.
 
 # summary
-In regulated corporate environments it is a challenge to bring in automation with Ansible, significantly to overcome security concerns.   One significant problem, in this regard, is that once Ansible/Tower is setup in an environment (ssh access, sudo without a password), there are no checks or controls on the content of playbooks.
+In regulated corporate environments it is a challenge to bring in automation with Ansible, particularly to overcome security concerns.   One significant problem, in this regard, is that once Ansible/Tower is setup in an environment (ssh access, sudo without a password), there are no checks or controls on the content of playbooks.
 
-From a security perspective, there is nothing to stop DevOps teams creating multiple root accounts for example.   Yes, the counter argument from the Ansible folk is 'pets v cattle.'   But Ansible's opinion simply implies, 'it's your problem, it's up to you to convince your security teams.'   So until we can convince security teams of the 'pets v cattle' argument, we're blocked from really moving on with Ansible.
+From a security perspective, there is nothing to stop DevOps teams creating multiple root accounts for example.   Yes, the counter argument from the Ansible folk is 'pets v cattle.'   But Ansible's opinion simply implies, 'it's your problem, it's up to you to convince your security teams.'   So until we can convince security teams of the 'pets v cattle' argument, we're blocked from really moving on with Ansible in a production environment.
 
-So, I've written a firewall plugin for Ansible.   Security teams can now write a security policy in yaml, which can enforce things like disabling the command module, or disabling the dump argument of the mysql_db module.   The firewall plugin runs as a strategy, which means you can force all playbook runs through it.
+So, I've written a firewall plugin for Ansible, to try and help things along.   Security teams can now write a security policy in yaml, which can enforce things like disabling the command module, or disabling the dump argument of the mysql_db module.   The firewall plugin runs as a strategy, which means you can force all playbook runs through it.
 
 Security policy can then be implemented as:
 
