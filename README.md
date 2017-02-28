@@ -8,7 +8,7 @@ From a security perspective, there is nothing to stop DevOps teams creating mult
 
 So, I've written a firewall plugin for Ansible, to try and help things along.   Security teams can now write a security policy in yaml, which can enforce things like disabling the command module, or disabling the dump argument of the mysql_db module.   The firewall plugin runs as a strategy, which means you can force all playbook runs through it.
 
-Security policy can then be implemented as:
+Security policy (potentially a merged set of policy files) can then be implemented as:
 
 ```
 # /etc/ansible/firewall_policy.yml
