@@ -33,7 +33,7 @@ user:
 
 ## scenario three
 
-Where things get interesting us when we can run rules against argument values.   There are many modules which operate at the root privilege level.   Because we know mistakes happen, we can implement some protection in our security policy.
+Where things get interesting is when we can run rules against argument values.   There are many modules which operate at the root privilege level.   Because we know mistakes happen, we can implement some protection in our security policy.
 
 ```
 # /etc/ansible/firewall_policy.yml
