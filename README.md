@@ -47,9 +47,9 @@ oracle_sql:
 
 ## the plugin
 
-This strategy plugin for Ansible is intended to improve the Ansible story around security.   The policy is written in yaml, and I foresee it being managed by a SecOps team.   Security can be enforced at point-of-execution, no matter how long ago a playbook was committed to the production repo.
+This strategy plugin for Ansible is intended to improve the Ansible story around security.   The policy is written in yaml, and I foresee it being managed by a SecOps team.   Running as a strategy plugin means security policy is enforced at point-of-execution, no matter how long ago the playbook was commited to prod.
 
-Running as a strategy plugin, it can be used in dev, test and prod.   There's not much to setup, and negligable overhead.   But this gives DevOps engineers instant feedback on the compliance of their playbooks.
+There's not much to setup and negligable overhead, so it can be used in dev, test and prod.   This gives DevOps engineers instant feedback on the compliance of their playbooks.
 
 Security policy (potentially a merged set of policy files) can then be implemented as:
 
