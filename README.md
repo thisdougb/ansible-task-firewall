@@ -17,6 +17,8 @@ SecOps want to prevent arbitrary commands being run on hosts.   This is fairly s
 command:
 script:
 shell:
+expect:
+raw:
 ```
 
 ## scenario two
