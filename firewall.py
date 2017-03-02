@@ -6,6 +6,7 @@ __metaclass__ = type
 import cmd
 import sys
 import yaml
+import pprint
 
 from ansible.plugins.strategy.linear import StrategyModule as LinearStrategyModule
 from ansible.errors import AnsibleError
@@ -53,6 +54,9 @@ class Firewall:
        except IOError:
            display.warning('%s missing, no firewall policy will be applied' % firewall_policy_path)
            pass
+       else:
+           display.v("firewall policy loaded: %s" % firewall_policy_path)
+
 
     def reject_task(self, task, task_vars):
 
@@ -62,6 +66,7 @@ class Firewall:
             # is the entire action blocked?
             if not isinstance(self.policy[task.action], list) and not isinstance(self.policy[task.action], dict):
                 raise AnsibleError('firewall policy: module (%s) blocked' % task.action)
+            display.v('firewall rule: module [%s]' % (self.policy[task.action]))
 
             # now check the action args
             for key in self.policy[task.action]:
@@ -72,6 +77,7 @@ class Firewall:
                 # is an entire arg of this action blocked?
                 if not isinstance(self.policy[task.action][key], list):
                     raise AnsibleError('firewall policy: module (%s) arg (%s) blocked' % (task.action, key))
+                display.v('firewall rule passed: [%s:%s] against %s' % (self.policy[task.action], self.policy[task.action][key], task.args[key]))
 
                 # check if the task arg contains a var that needs to be expanded
                 if isinstance(task.args[key], str) and task.args[key].find('\{\{'):
@@ -83,8 +89,6 @@ class Firewall:
                 # for each rule in the policy module:arg:[value] list, compare the current task arg
                 for rule in self.policy[task.action][key]:
 
-                    display.display('checking firewall rule: [%s:%s %s]' % (task.action, key, rule))
-
                     # do we have the 'contains' verb option in policy
                     if str(rule).startswith('contains'):
                         if str(task.args[key]).find(rule[9:]) != -1:
@@ -93,3 +97,5 @@ class Firewall:
                     # check if the policy arg is an exact match for the task arg
                     elif task.args[key] == rule:
                         raise AnsibleError('firewall policy: module (%s) arg (%s) value (%s) blocked' % (task.action, key, rule))
+
+                    display.v('firewall rule passed: [%s:%s %s] against %s' % (task.action, key, rule, task.args[key]))
