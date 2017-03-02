@@ -8,7 +8,7 @@ This firewall strategy plugin provides that control.   Security policy is writte
 
 ## scenario one
 
-SecOps want to prevent arbitrary commands being run on hosts.   This is fairly simple, we can block the modules which allow command/script execution.
+SecOps want to prevent arbitrary commands being run on hosts.   This is fairly simple, we can block the modules which allow command/script execution.   We list modules to be blocked as dict's without keys.
 
 ```
 # /etc/ansible/firewall_policy.yml
@@ -21,7 +21,7 @@ shell:
 
 ## scenario two
 
-If we want to block a particular argument of a module, we can.   Say we allow user creation, but any Ansible-created users must use ssh keys and not passwords for login.
+If we want to block a particular argument of a module, we can.   Say we allow user creation, but any Ansible-created users must use ssh keys and not passwords for login.   We do this by creating the module as a dict and defining the argument as a key.
 
 ```
 # /etc/ansible/firewall_policy.yml
@@ -33,7 +33,7 @@ user:
 
 ## scenario three
 
-Where things get interesting is when we can run rules against argument values.   There are many modules which operate at the root privilege level.   Because we know mistakes happen, we can implement some protection in our security policy.
+Where things get interesting is when we can run rules against argument values.   There are many modules which operate at the root privilege level.   Because we know mistakes happen, we can implement some protection in our security policy.   This is the final construct of our policy.yml structure, for the module key we define a list of rules to apply.
 
 ```
 # /etc/ansible/firewall_policy.yml
