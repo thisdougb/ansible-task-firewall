@@ -1,12 +1,55 @@
 # ansible-task-firewall
 a firewall strategy-plugin for Ansible, to halt play executing when SecOps policy is violated.
 
-# summary
-In regulated corporate environments it is a challenge to bring in automation with Ansible, particularly to overcome security concerns.   One significant problem, in this regard, is that once Ansible/Tower is setup in an environment (ssh access, sudo without a password), there are no checks or controls on the content of playbooks.
+## summary
+In regulated corporate environments it is a challenge to introduce production automation with Ansible, particularly to overcome security concerns.   One significant concern is that the Ansible/Tower environment (ssh access, sudo without a password) doesn't have any real controls over *what* is run against hosts.   
 
-From a security perspective, there is nothing to stop DevOps teams creating multiple root accounts for example.   Yes, the counter argument from the Ansible folk is 'pets v cattle.'   But Ansible's opinion simply implies, 'it's your problem, it's up to you to convince your security teams.'   So until we can convince security teams of the 'pets v cattle' argument, we're blocked from really moving on with Ansible in a production environment.
+This firewall strategy plugin provides that control.   Security policy is written in yaml, and consumed and implemented during playbook exection.   Any task violating the policy causes the playbook execution to halt.
 
-So, I've written a firewall plugin for Ansible, to try and help things along.   Security teams can now write a security policy in yaml, which can enforce things like disabling the command module, or disabling the dump argument of the mysql_db module.   The firewall plugin runs as a strategy, which means you can force all playbook runs through it.
+## scenario one
+
+SecOps want to prevent arbitrary commands being run on hosts.   This is fairly simple, we can block the modules which allow command/script execution.   We list modules to be blocked as dict's without keys.
+
+```
+# /etc/ansible/firewall_policy.yml
+
+# prevent these modules being used
+command:
+script:
+shell:
+```
+
+## scenario two
+
+If we want to block a particular argument of a module, we can.   Say we allow user creation, but any Ansible-created users must use ssh keys and not passwords for login.   We do this by creating the module as a dict and defining the argument as a key.
+
+```
+# /etc/ansible/firewall_policy.yml
+
+# prevent the password argument, of the user module, being used
+user:
+  password:
+```
+
+## scenario three
+
+Where things get interesting is when we can run rules against argument values.   There are many modules which operate at the root privilege level.   Because we know mistakes happen, we can implement some protection in our security policy.   This is the final construct of our policy.yml structure, for the module key we define a list of rules to apply.
+
+```
+# /etc/ansible/firewall_policy.yml
+
+# prevent free text sql statements which contain 'drop' or 'system'
+oracle_sql:
+  sql:
+    - contains drop
+    - contains system
+```
+
+## the plugin
+
+This strategy plugin for Ansible is intended to improve the Ansible story around security.   The policy is written in yaml, and I foresee it being managed by a SecOps team.   Running as a strategy plugin means security policy is enforced at point-of-execution, no matter how long ago the playbook was commited to prod.
+
+There's not much to setup and negligable overhead, so it can be used in dev, test and prod.   This gives DevOps engineers instant feedback on the compliance of their playbooks.
 
 Security policy (potentially a merged set of policy files) can then be implemented as:
 
