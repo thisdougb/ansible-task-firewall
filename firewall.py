@@ -93,5 +93,3 @@ class Firewall:
                     # check if the policy arg is an exact match for the task arg
                     elif task.args[key] == rule:
                         raise AnsibleError('firewall policy: module (%s) arg (%s) value (%s) blocked' % (task.action, key, rule))
-
-        return False
