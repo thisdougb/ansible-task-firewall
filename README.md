@@ -4,7 +4,11 @@ a firewall strategy-plugin for Ansible, to halt play executing when SecOps polic
 ## summary
 In regulated corporate environments it is a challenge to introduce production automation with Ansible, particularly to overcome security concerns.   One significant concern is that the Ansible/Tower environment (ssh access, sudo without a password) doesn't have any real controls over *what* is run against hosts.   
 
-This firewall strategy plugin provides that control.   Security policy is written in yaml, and consumed and implemented during playbook exection.   Any task violating the policy causes the playbook execution to halt.
+This task firewall strategy plugin provides that control.   Security policy is written in yaml, and consumed and implemented during playbook exection.   Any task violating the policy causes the playbook execution to halt.
+
+My supposition is that SecOps manage the policy itself, which was the principle reason for defining it in yaml.   Blocking modules and arguments to modules works well, which is often enough to encourage Security teams to see Ansible as a useful security tool.   
+
+Blocking argument values (command='rm -rf /') is a work in progress, see ToDo below.
 
 ## enforcement premise
 
