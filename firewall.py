@@ -1,7 +1,8 @@
 # file: /usr/lib/python2.7/site-packages/ansible/plugins/strategy/firewall.py
 
-#  A strategy plugin for Ansible (2.2+) to enforce task action restrictions by policy
-#   Copyright (C) 2017  Doug Bridgens, https://github.com/thisdougb
+# A strategy plugin for Ansible (2.2+) to enforce task action restrictions by policy.
+#
+# Copyright (C) 2017  Doug Bridgens, https://github.com/thisdougb
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
