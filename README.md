@@ -67,11 +67,11 @@ user:
   uid:
     - 0
 
-# prevent 'password' or 'drop' (sql) in the args to command
-command: 
-  _raw_params: 
-    - contains password
+# prevent free text sql statements which contain 'drop' or 'system'
+oracle_sql:
+  sql:
     - contains drop
+    - contains system
 
 # disallow the shell module
 shell:
