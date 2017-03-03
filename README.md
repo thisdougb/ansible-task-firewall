@@ -143,3 +143,5 @@ ERROR! firewall policy: module (yum) arg (name) value (tcpdump) blocked
 # TODO
 The Ansible execution flow gets quite complicated around variables, conditionals, and includes.   So I am still working on how to correctly parse the hierarchy of variables and includes.   This means that a simple workaround for the 'contains drop' rule above is to store the command arg in a variable.   This could be countered by disabling variables on certain arguments, but that's not good Ansible practice.
 
+I could forsee the snippet of policy for a particular action (if it exists) being sent over in the context with the task, to the remote.  Once all vars/filters/etc are resolved, the action module could could simply run the policy arg checks, failing the task (before execution) if there was a violation.   This would bring additional functionality, but would require a change to core.
+
