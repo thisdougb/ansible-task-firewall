@@ -6,6 +6,10 @@ In regulated corporate environments it is a challenge to introduce production au
 
 This firewall strategy plugin provides that control.   Security policy is written in yaml, and consumed and implemented during playbook exection.   Any task violating the policy causes the playbook execution to halt.
 
+## enforcement premise
+
+In my environment I am able to enforce the running of a particular strategy, on Tower, production Ansible servers, etc.   There are a bunch of ways you can do this (manipulate strategy file names, inject 'strategy: firewall' into playbooks at commit time, etc), so I'm not detailing that here.   Playbooks are never run by DevOps directly against target hosts, ie never from someone's laptop where the tasks are executed by a local Ansible install.
+
 ## scenario one
 
 SecOps want to prevent arbitrary commands being run on hosts.   This is fairly simple, we can block the modules which allow command/script execution.   We list modules to be blocked as dict's without keys.
