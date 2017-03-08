@@ -35,6 +35,10 @@ except ImportError:
     from ansible.utils.display import Display
     display = Display()
 
+class TaskFirewallAnsibleError(AnsibleError):
+    ''' a task policy rule has been matched '''
+    pass
+
 class StrategyModule(LinearStrategyModule):
     def __init__(self, tqm):
 
@@ -83,7 +87,7 @@ class Firewall:
 
             # is the entire action blocked?
             if not isinstance(self.policy[task.action], list) and not isinstance(self.policy[task.action], dict):
-                raise AnsibleError('firewall policy: module (%s) blocked' % task.action)
+                raise TaskFirewallAnsibleError('firewall policy: module (%s) blocked' % task.action)
             display.v('firewall rule: module [%s]' % (self.policy[task.action]))
 
             # now check the action args
@@ -94,7 +98,7 @@ class Firewall:
 
                 # is an entire arg of this action blocked?
                 if not isinstance(self.policy[task.action][key], list):
-                    raise AnsibleError('firewall policy: module (%s) arg (%s) blocked' % (task.action, key))
+                    raise TaskFirewallAnsibleError('firewall policy: module (%s) arg (%s) blocked' % (task.action, key))
                 display.v('firewall rule passed: [%s:%s] against %s' % (self.policy[task.action], self.policy[task.action][key], task.args[key]))
 
                 # check if the task arg contains a var that needs to be expanded
@@ -110,10 +114,10 @@ class Firewall:
                     # do we have the 'contains' verb option in policy
                     if str(rule).startswith('contains'):
                         if str(task.args[key]).find(rule[9:]) != -1:
-                            raise AnsibleError('firewall policy: module (%s) arg (%s) (%s) blocked' % (task.action, key, rule))
+                            raise TaskFirewallAnsibleError('firewall policy: module (%s) arg (%s) (%s) blocked' % (task.action, key, rule))
 
                     # check if the policy arg is an exact match for the task arg
                     elif task.args[key] == rule:
-                        raise AnsibleError('firewall policy: module (%s) arg (%s) value (%s) blocked' % (task.action, key, rule))
+                        raise TaskFirewallAnsibleError('firewall policy: module (%s) arg (%s) value (%s) blocked' % (task.action, key, rule))
 
                     display.v('firewall rule passed: [%s:%s %s] against %s' % (task.action, key, rule, task.args[key]))
