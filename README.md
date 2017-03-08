@@ -6,7 +6,7 @@ In regulated corporate environments it is a challenge to introduce production au
 
 This task firewall strategy plugin provides that control.   Security policy is written in yaml, and consumed and implemented during playbook exection.   Any task violating the policy causes the playbook execution to halt.   So we are concerned with the content of playbooks, rather than the (Tower-ish) right to run a playbook.
 
-My supposition is that SecOps manage the policy itself, which was the principle reason for defining it in yaml.   Blocking modules and arguments to modules works well, which is often enough for Security teams to see Ansible as beneficial to their control of the corporate environment rather than weakening it.
+My supposition is that SecOps manage the policy itself, which was the principle reason for defining it in yaml.   Blocking modules and arguments to modules works well.   This is often enough for Security teams to see Ansible as beneficial to their control of the corporate environment rather than weakening it.
 
 Blocking argument values (command='rm -rf /') is a work in progress, see ToDo below.
 
@@ -142,4 +142,6 @@ ERROR! firewall policy: module (yum) arg (name) value (tcpdump) blocked
 
 # TODO
 The Ansible execution flow gets quite complicated around variables, conditionals, and includes.   So I am still working on how to correctly parse the hierarchy of variables and includes.   This means that a simple workaround for the 'contains drop' rule above is to store the command arg in a variable.   This could be countered by disabling variables on certain arguments, but that's not good Ansible practice.
+
+I could forsee the snippet of policy for a particular action (if it exists) being sent over in the context with the task, to the remote.  Once all vars/filters/etc are resolved, the action module could could simply run the policy arg checks, failing the task (before execution) if there was a violation.   This would bring additional functionality, but would require a change to core.
 
